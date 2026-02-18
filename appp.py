@@ -51,6 +51,10 @@ st.markdown("""
     .stApp {
         background-color: #fafafa;
     }
+    div[data-testid="stExpander"] div[role="button"] p {
+        font-size: 1.1rem;
+        font-weight: 600;
+    }
 </style>
 """, unsafe_allow_html=True)
 
@@ -431,17 +435,19 @@ if st.session_state.processor.df is not None:
     with col1:
         selected_column = st.selectbox(
             "Select column",
-            st.session_state.processor.df.columns
+            st.session_state.processor.df.columns,
+            key="quick_calc_column"
         )
     
     with col2:
         operation = st.selectbox(
             "Operation",
-            ["Sum", "Average", "Min", "Max", "Count"]
+            ["Sum", "Average", "Min", "Max", "Count"],
+            key="quick_calc_operation"
         )
     
     with col3:
-        if st.button("Calculate", use_container_width=True, type="secondary"):
+        if st.button("Calculate", use_container_width=True, type="secondary", key="quick_calc_button"):
             result = st.session_state.processor.calculate_direct(selected_column, operation)
             if result is not None:
                 st.success(f"**{operation} of {selected_column}:** {result:,.2f}")
@@ -464,7 +470,7 @@ question = st.text_input(
 
 col1, col2, col3 = st.columns([2, 1, 2])
 with col2:
-    ask_button = st.button("🚀 Ask Gemini", type="primary", use_container_width=True)
+    ask_button = st.button("🚀 Ask Gemini", type="primary", use_container_width=True, key="ask_button")
 
 if ask_button and question:
     # Check if data is loaded
@@ -513,10 +519,10 @@ if ask_button and question:
 # Chat history
 if st.session_state.chat_history:
     with st.expander("📜 Recent Questions"):
-        for chat in st.session_state.chat_history[-5:]:
+        for i, chat in enumerate(st.session_state.chat_history[-5:]):
             st.markdown(f"**Q:** {chat['question']}")
             st.markdown(f"*{chat['time']}*")
-            if len(chat_history) < len(st.session_state.chat_history):  # Add separator except last
+            if i < len(st.session_state.chat_history[-5:]) - 1:  # Add separator except last
                 st.markdown("---")
 
 # Footer
