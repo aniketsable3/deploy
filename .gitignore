@@ -1,0 +1,34 @@
+# Virtual Environment
+venv/
+env/
+ENV/
+myenv/
+.env/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Streamlit
+.streamlit/
+secrets.toml
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project specific
+*.xlsx
+*.csv
+*.pdf
+data/
+uploads/
