@@ -106,7 +106,7 @@ if not GEMINI_API_KEY:
     st.stop()
 
 # Using confirmed working model
-GEMINI_MODEL = "gemini-3-flash-preview"
+GEMINI_MODEL = "gemini-2.5-flash"
 GEMINI_API_URL = f"https://generativelanguage.googleapis.com/v1beta/models/{GEMINI_MODEL}:generateContent"
 
 # ============================================
